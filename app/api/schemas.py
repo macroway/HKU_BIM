@@ -25,3 +25,16 @@ class ChatResponse(BaseModel):
     results: dict
     did_run_tools: bool
     planner: str
+
+
+class PreviewElement(BaseModel):
+    id: str
+    type: str
+    name: str
+    aabb: dict
+
+
+class ModelPreviewResponse(BaseModel):
+    model_id: str
+    element_count: int
+    elements: list[PreviewElement]

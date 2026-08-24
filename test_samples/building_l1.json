@@ -1,0 +1,209 @@
+{
+  "elements": [
+    {
+      "id": "wall-ext-w",
+      "type": "IfcWall",
+      "name": "一层-西外墙",
+      "props": {
+        "Name": "一层-西外墙",
+        "FireRating": "2h"
+      },
+      "aabb": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0.3,
+          15,
+          3
+        ]
+      }
+    },
+    {
+      "id": "wall-ext-e",
+      "type": "IfcWall",
+      "name": "一层-东外墙",
+      "props": {
+        "Name": "一层-东外墙",
+        "FireRating": "2h"
+      },
+      "aabb": {
+        "min": [
+          19.7,
+          0,
+          0
+        ],
+        "max": [
+          20,
+          15,
+          3
+        ]
+      }
+    },
+    {
+      "id": "wall-part-1",
+      "type": "IfcWall",
+      "name": "一层-1号隔墙",
+      "props": {
+        "Name": "一层-1号隔墙",
+        "FireRating": "1h"
+      },
+      "aabb": {
+        "min": [
+          9.7,
+          3,
+          0
+        ],
+        "max": [
+          10.3,
+          12,
+          3
+        ]
+      }
+    },
+    {
+      "id": "wall-part-2",
+      "type": "IfcWall",
+      "name": "一层-2号隔墙",
+      "props": {
+        "Name": "一层-2号隔墙",
+        "FireRating": "1h"
+      },
+      "aabb": {
+        "min": [
+          5,
+          9.7,
+          0
+        ],
+        "max": [
+          12,
+          10.3,
+          3
+        ]
+      }
+    },
+    {
+      "id": "beam-main",
+      "type": "IfcBeam",
+      "name": "一层-主梁B1",
+      "props": {
+        "Name": "一层-主梁B1"
+      },
+      "aabb": {
+        "min": [
+          5,
+          7.5,
+          2.8
+        ],
+        "max": [
+          15,
+          8,
+          3.2
+        ]
+      }
+    },
+    {
+      "id": "pipe-supply",
+      "type": "IfcPipeSegment",
+      "name": "风管-送风-01",
+      "props": {
+        "Name": "风管-送风-01",
+        "FireRating": "1h"
+      },
+      "aabb": {
+        "min": [
+          9.5,
+          6,
+          1
+        ],
+        "max": [
+          10.5,
+          6.4,
+          2
+        ]
+      }
+    },
+    {
+      "id": "pipe-return",
+      "type": "IfcPipeSegment",
+      "name": "风管-回风-02",
+      "props": {
+        "Name": "风管-回风-02",
+        "FireRating": "1h"
+      },
+      "aabb": {
+        "min": [
+          14,
+          4,
+          2.5
+        ],
+        "max": [
+          14.4,
+          8,
+          2.9
+        ]
+      }
+    },
+    {
+      "id": "door-d1",
+      "type": "IfcDoor",
+      "name": "防火门-D1",
+      "props": {
+        "Name": "防火门-D1"
+      },
+      "aabb": {
+        "min": [
+          10,
+          5,
+          0
+        ],
+        "max": [
+          10.2,
+          6,
+          2.1
+        ]
+      }
+    },
+    {
+      "id": "door-d2",
+      "type": "IfcDoor",
+      "name": "防火门-D2",
+      "props": {
+        "Name": "防火门-D2",
+        "FireRating": "1h"
+      },
+      "aabb": {
+        "min": [
+          10,
+          8,
+          0
+        ],
+        "max": [
+          10.2,
+          9,
+          2.1
+        ]
+      }
+    },
+    {
+      "id": "door-d3",
+      "type": "IfcDoor",
+      "name": "门-D3",
+      "props": {},
+      "aabb": {
+        "min": [
+          5,
+          5,
+          0
+        ],
+        "max": [
+          5.2,
+          6,
+          2.1
+        ]
+      }
+    }
+  ]
+}

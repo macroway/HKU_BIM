@@ -1,18 +1,34 @@
-# demo-collision.ifc — 已知碰撞说明
+# demo/building-l1.ifc — 一层综合演示模型
 
-生成方式：`python scripts/create_demo_ifc.py`（需已安装 ifcopenshell）
+与 `building_l1.json` **同几何、同标注**，IFC 格式用于真实模型路径演示。
 
-UI / API 样例 ID：`demo/demo-collision`
+生成：
 
-## 模型内容
+```bash
+python scripts/create_building_l1.py   # 同时生成 JSON + IFC
+# 或单独
+python scripts/create_building_l1_ifc.py
+```
 
-- **外墙 A**（IfcWall）：原点放置，长 10m
-- **内隔墙 B**（IfcWall）：x=5m 放置，长 6m，与外墙 A 在 x=5~10 区间重叠
+## 模型内容（10 构件）
 
-## 人工抽检（演示视频用）
+- 4 × IfcWall（东西外墙 + 2 道隔墙）
+- 1 × IfcBeam（主梁 B1，缺 FireRating）
+- 2 × IfcPipeSegment（送风 / 回风）
+- 3 × IfcDoor（D1/D2/D3，D1/D3 缺 FireRating）
 
-对 `demo-collision.ifc` 跑碰撞检查后，**至少应出现 1 对墙-墙碰撞**（外墙 A 与 内隔墙 B）。
+## 人工抽检
 
-属性：两面墙均有 Name 与 FireRating（2h），属性检查应为空缺失列表。
+| 检查 | 预期 |
+|------|------|
+| 碰撞 | **4 对**（与 JSON 金标一致） |
+| 属性 | **3 条** FireRating 缺失 |
 
-若 IFC 载入失败，演示改用 `test_samples/collision_positive.json`（金标正例）。
+UI 样例 ID：`demo/building-l1`
+
+## 与 demo-collision.ifc 区别
+
+| 文件 | 用途 |
+|------|------|
+| `demo-collision.ifc` | 最小墙-墙碰撞（2 墙） |
+| `building-l1.ifc` | **主演示**：多专业 + 多碰撞 + 缺属性 |

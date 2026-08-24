@@ -38,7 +38,7 @@ def test_offline_both_checks():
 
 def test_guard_blocks_false_pass_without_tools():
     reply = _guard_reply("检查通过，无碰撞，一切正常。", did_run_tools=False)
-    assert "尚未执行检查工具" in reply
+    assert "不确定" in reply or "请说明" in reply
 
 
 def test_offline_attrs_on_missing_sample():
@@ -64,3 +64,74 @@ def test_offline_generic_check_runs_both():
     assert out["did_run_tools"]
     assert "collision" in out["results"]
     assert "attributes" in out["results"]
+
+
+@pytest.mark.parametrize(
+    "message",
+    ["111", "???", "", "   ", "..."],
+)
+def test_gibberish_messages(message: str):
+    from app.agent.router_fallback import is_gibberish
+
+    assert is_gibberish(message)
+
+
+@pytest.mark.parametrize(
+    "message",
+    ["模型有没有问题", "帮我看看", "hello", "你好"],
+)
+def test_not_gibberish_messages(message: str):
+    from app.agent.router_fallback import is_gibberish
+
+    assert not is_gibberish(message)
+
+
+def test_online_gibberish_skips_llm(monkeypatch):
+    model_id = _register("collision_positive")
+    called: list[int] = []
+
+    def fake_chat(*_args, **_kwargs):
+        called.append(1)
+        return {"choices": [{"message": {"content": "不应出现"}}]}
+
+    monkeypatch.setattr("app.agent.loop.chat_with_tools", fake_chat)
+    out = run_agent_loop(model_id, "111", force_offline=False)
+    assert called == []
+    assert out["did_run_tools"] is False
+
+
+def test_online_ambiguous_message_calls_llm(monkeypatch):
+    model_id = _register("collision_positive")
+    called: list[int] = []
+
+    def fake_chat(*_args, **_kwargs):
+        called.append(1)
+        return {
+            "choices": [
+                {
+                    "message": {
+                        "content": "需要确认：您要查碰撞、属性，还是两项都查？",
+                        "tool_calls": None,
+                    }
+                }
+            ]
+        }
+
+    monkeypatch.setattr("app.agent.loop.chat_with_tools", fake_chat)
+    out = run_agent_loop(model_id, "模型有没有问题", force_offline=False)
+    assert len(called) == 1
+    assert out["did_run_tools"] is False
+    assert "碰撞" in out["reply"] or "属性" in out["reply"]
+
+
+def test_offline_ambiguous_still_needs_keywords():
+    model_id = _register("collision_positive")
+    out = run_agent_loop(model_id, "模型有没有问题", force_offline=True)
+    assert out["did_run_tools"] is False
+    assert "不确定" in out["reply"] or "请说明" in out["reply"]
+
+
+def test_guard_blocks_hallucinated_bim_report():
+    fake = "### BIM模型检查结果\nIfcWall 与 IfcBeam 碰撞对 2 个"
+    reply = _guard_reply(fake, did_run_tools=False)
+    assert "不确定" in reply or "请说明" in reply

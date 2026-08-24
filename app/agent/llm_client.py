@@ -1,13 +1,21 @@
-import json
 from typing import Any
 
 import httpx
 
-from app.config import OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL
-from app.tools.registry import get_openai_tools_schema
+from app.agent.ark_client import ark_responses_create
+from app.config import OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL, resolve_llm_provider
 
 
 def chat_with_tools(messages: list[dict[str, Any]], tools: list[dict] | None = None) -> dict:
+    provider = resolve_llm_provider()
+    if provider == "ark":
+        return ark_responses_create(messages, tools=tools)
+    if provider == "openai":
+        return _openai_chat_with_tools(messages, tools=tools)
+    raise RuntimeError("No LLM provider configured (set ARK_API_KEY or OPENAI_API_KEY, or disable CHECKBIM_OFFLINE)")
+
+
+def _openai_chat_with_tools(messages: list[dict[str, Any]], tools: list[dict] | None = None) -> dict:
     if not OPENAI_API_KEY:
         raise RuntimeError("OPENAI_API_KEY not configured")
 

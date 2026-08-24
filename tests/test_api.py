@@ -17,7 +17,17 @@ def test_list_samples():
     assert response.status_code == 200
     data = response.json()
     assert any(s["id"] == "collision_positive" for s in data)
+    assert any(s["id"] == "building_l1" for s in data)
     assert any(s["id"] == "demo/demo-collision" for s in data)
+    assert any(s["id"] == "demo/building-l1" for s in data)
+    ids = {s["id"] for s in data}
+    assert "attrs_missing" not in ids
+    assert "attrs_ok" not in ids
+
+
+def test_select_hidden_sample_still_works():
+    sel = client.post("/api/models/select/attrs_missing")
+    assert sel.status_code == 200
 
 
 def test_select_sample_and_chat():
@@ -69,3 +79,24 @@ def test_index_served():
     response = client.get("/")
     assert response.status_code == 200
     assert "CheckBIM Agent" in response.text
+    assert "plan-canvas" in response.text
+
+
+def test_model_preview():
+    sel = client.post("/api/models/select/collision_positive")
+    assert sel.status_code == 200
+    model_id = sel.json()["model_id"]
+    preview = client.get(f"/api/models/{model_id}/preview")
+    assert preview.status_code == 200
+    data = preview.json()
+    assert data["element_count"] >= 1
+    assert len(data["elements"]) >= 1
+    assert "aabb" in data["elements"][0]
+
+
+def test_llm_status_offline_by_default_in_tests():
+    response = client.get("/api/llm/status")
+    assert response.status_code == 200
+    body = response.json()
+    assert "provider" in body
+    assert "planner_label" in body

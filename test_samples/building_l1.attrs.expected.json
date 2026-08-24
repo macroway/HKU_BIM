@@ -1,0 +1,29 @@
+{
+  "missing": [
+    {
+      "id": "beam-main",
+      "type": "IfcBeam",
+      "field": "FireRating"
+    },
+    {
+      "id": "door-d1",
+      "type": "IfcDoor",
+      "field": "FireRating"
+    },
+    {
+      "id": "door-d3",
+      "type": "IfcDoor",
+      "field": "FireRating"
+    }
+  ],
+  "fields_checked": [
+    "Name",
+    "FireRating"
+  ],
+  "types_checked": [
+    "IfcBeam",
+    "IfcDoor",
+    "IfcPipeSegment",
+    "IfcWall"
+  ]
+}

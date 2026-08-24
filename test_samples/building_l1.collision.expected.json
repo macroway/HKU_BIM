@@ -1,0 +1,42 @@
+{
+  "pairs": [
+    {
+      "a": "beam-main",
+      "b": "pipe-return",
+      "a_type": "IfcBeam",
+      "b_type": "IfcPipeSegment",
+      "a_name": "一层-主梁B1",
+      "b_name": "风管-回风-02"
+    },
+    {
+      "a": "beam-main",
+      "b": "wall-part-1",
+      "a_type": "IfcBeam",
+      "b_type": "IfcWall",
+      "a_name": "一层-主梁B1",
+      "b_name": "一层-1号隔墙"
+    },
+    {
+      "a": "pipe-supply",
+      "b": "wall-part-1",
+      "a_type": "IfcPipeSegment",
+      "b_type": "IfcWall",
+      "a_name": "风管-送风-01",
+      "b_name": "一层-1号隔墙"
+    },
+    {
+      "a": "wall-part-1",
+      "b": "wall-part-2",
+      "a_type": "IfcWall",
+      "b_type": "IfcWall",
+      "a_name": "一层-1号隔墙",
+      "b_name": "一层-2号隔墙"
+    }
+  ],
+  "engine": "aabb_v1",
+  "element_types_checked": [
+    "IfcBeam",
+    "IfcPipeSegment",
+    "IfcWall"
+  ]
+}

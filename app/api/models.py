@@ -3,20 +3,26 @@ from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, UploadFile
 
-from app.api.schemas import ModelRegisterResponse, SampleInfo
+from app.api.schemas import ModelPreviewResponse, ModelRegisterResponse, PreviewElement, SampleInfo
 from app.config import MAX_UPLOAD_BYTES, SAMPLES_DIR, UPLOAD_DIR
-from app.models.store import register_model
+from app.models.store import get_model, register_model
 
 router = APIRouter(prefix="/api/models", tags=["models"])
 
 ALLOWED_SUFFIXES = {".json", ".ifc", ".ifczip"}
 
+# CI 金标样例，不在 UI 内置列表展示
+HIDDEN_UI_SAMPLES = frozenset({"attrs_missing", "attrs_ok"})
 
-def _list_sample_files() -> list[Path]:
+
+def _list_sample_files(*, include_hidden: bool = False) -> list[Path]:
     files: list[Path] = []
     for path in sorted(SAMPLES_DIR.glob("*.json")):
-        if not path.name.endswith(".expected.json"):
-            files.append(path)
+        if path.name.endswith(".expected.json"):
+            continue
+        if not include_hidden and path.stem in HIDDEN_UI_SAMPLES:
+            continue
+        files.append(path)
     demo_dir = SAMPLES_DIR / "demo"
     if demo_dir.exists():
         files.extend(sorted(demo_dir.glob("*.ifc")))
@@ -92,4 +98,31 @@ async def upload_model(file: UploadFile):
         model_id=model_id,
         source="upload",
         format=suffix.lstrip("."),
+    )
+
+
+@router.get("/{model_id}/preview", response_model=ModelPreviewResponse)
+def model_preview(model_id: str):
+    try:
+        model = get_model(model_id)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+    elements: list[PreviewElement] = []
+    for element in model.elements:
+        if element.aabb is None:
+            continue
+        elements.append(
+            PreviewElement(
+                id=element.id,
+                type=element.type,
+                name=element.name or "",
+                aabb={"min": element.aabb.min, "max": element.aabb.max},
+            )
+        )
+
+    return ModelPreviewResponse(
+        model_id=model.model_id,
+        element_count=len(model.elements),
+        elements=elements,
     )

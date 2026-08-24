@@ -11,12 +11,17 @@ SAMPLES = Path(__file__).resolve().parent.parent / "test_samples"
 
 @pytest.mark.parametrize(
     "sample_name",
-    ["collision_positive", "collision_negative"],
+    ["collision_positive", "collision_negative", "building_l1"],
 )
 def test_collision_golden(sample_name: str):
     model = load_json_model(SAMPLES / f"{sample_name}.json")
     result = run_collision_check(model)
-    expected = json.loads((SAMPLES / f"{sample_name}.expected.json").read_text(encoding="utf-8"))
+    expected_path = SAMPLES / (
+        f"{sample_name}.expected.json"
+        if sample_name != "building_l1"
+        else "building_l1.collision.expected.json"
+    )
+    expected = json.loads(expected_path.read_text(encoding="utf-8"))
     assert result == expected
 
 
