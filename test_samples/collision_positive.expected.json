@@ -1,0 +1,22 @@
+{
+  "pairs": [
+    {
+      "a": "beam-1",
+      "b": "wall-1",
+      "a_type": "IfcBeam",
+      "b_type": "IfcWall",
+      "a_name": "主梁 B",
+      "b_name": "外墙 A"
+    },
+    {
+      "a": "pipe-1",
+      "b": "wall-1",
+      "a_type": "IfcPipeSegment",
+      "b_type": "IfcWall",
+      "a_name": "风管-01",
+      "b_name": "外墙 A"
+    }
+  ],
+  "engine": "aabb_v1",
+  "element_types_checked": ["IfcBeam", "IfcPipeSegment", "IfcWall"]
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>CheckBIM Agent — 方案3：中性工业面板</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #3a4552;
+      color: #e8eaed;
+      min-width: 1280px;
+      min-height: 800px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .toolbar {
+      height: 40px;
+      background: linear-gradient(180deg, #4a5664 0%, #3d4854 100%);
+      border-bottom: 1px solid #2a323c;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 4px;
+    }
+    .toolbar .brand {
+      padding: 0 12px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #fff;
+      border-right: 1px solid #5a6674;
+      margin-right: 8px;
+    }
+    .toolbar .brand span { font-weight: 400; color: #b8c0c8; font-size: 11px; margin-left: 8px; }
+    .tool-btn {
+      padding: 4px 10px;
+      background: #4a5664;
+      border: 1px solid #5a6674;
+      color: #d0d6dc;
+      font-size: 11px;
+      cursor: default;
+      font-family: inherit;
+    }
+    .tool-btn:hover { background: #556270; }
+    .tool-btn.active { background: #2d6a9f; border-color: #3d7ab0; color: #fff; }
+    .workspace {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: calc(100vh - 40px);
+    }
+    .ribbon {
+      background: #2f3842;
+      border-bottom: 1px solid #252c34;
+      padding: 8px 16px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .ribbon-item { color: #9aa3ad; font-size: 11px; }
+    .ribbon-item strong { color: #e8eaed; display: block; font-size: 12px; }
+    .content {
+      display: grid;
+      grid-template-columns: 280px 1fr 260px;
+      gap: 2px;
+      background: #252c34;
+      flex: 1;
+    }
+    .pane {
+      background: #343e4a;
+      display: flex;
+      flex-direction: column;
+    }
+    .pane-head {
+      padding: 6px 10px;
+      background: #2a323c;
+      border-bottom: 1px solid #252c34;
+      font-size: 10px;
+      font-weight: 600;
+      color: #9aa3ad;
+      letter-spacing: 0.06em;
+    }
+    .pane-body { padding: 12px; flex: 1; }
+    .tree-item {
+      padding: 6px 8px;
+      border-left: 2px solid transparent;
+      cursor: default;
+      display: flex;
+      justify-content: space-between;
+    }
+    .tree-item:hover { background: #3d4854; }
+    .tree-item.sel { border-left-color: #4a9fd4; background: #3a4552; }
+    .tree-item .badge { font-size: 10px; color: #7a8490; }
+    .center-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      text-align: center;
+    }
+    .drop-panel {
+      width: 100%;
+      max-width: 480px;
+      border: 2px dashed #5a6674;
+      background: #2f3842;
+      padding: 36px 24px;
+      margin-bottom: 16px;
+    }
+    .drop-panel h2 { font-size: 16px; color: #fff; margin-bottom: 6px; }
+    .drop-panel p { color: #9aa3ad; font-size: 11px; margin-bottom: 20px; }
+    .btn-row { display: flex; gap: 8px; justify-content: center; }
+    .btn {
+      padding: 8px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid;
+      cursor: default;
+      font-family: inherit;
+    }
+    .btn-primary { background: #2d6a9f; border-color: #3d7ab0; color: #fff; }
+    .btn-secondary { background: #4a5664; border-color: #5a6674; color: #d0d6dc; }
+    .props-table { width: 100%; font-size: 11px; }
+    .props-table td { padding: 5px 0; border-bottom: 1px solid #3d4854; }
+    .props-table td:first-child { color: #9aa3ad; width: 45%; }
+    .props-table td:last-child { color: #e8eaed; text-align: right; }
+    .statusbar {
+      height: 24px;
+      background: #2a323c;
+      border-top: 1px solid #252c34;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 20px;
+      font-size: 10px;
+      color: #7a8490;
+    }
+    .statusbar .ok { color: #6db86a; }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="brand">CheckBIM Agent <span>交付前碰撞与属性检查</span></div>
+    <button type="button" class="tool-btn active">打开</button>
+    <button type="button" class="tool-btn">样例</button>
+    <button type="button" class="tool-btn">检查</button>
+    <button type="button" class="tool-btn">报告</button>
+    <span style="flex:1"></span>
+    <span style="font-size:10px;color:#7a8490">v0.1 · 本地</span>
+  </div>
+
+  <div class="workspace">
+    <div class="ribbon">
+      <div class="ribbon-item"><strong>碰撞检测</strong>墙 / 梁 / 管道</div>
+      <div class="ribbon-item"><strong>属性完整性</strong>Name / FireRating</div>
+      <div class="ribbon-item"><strong>格式</strong>IFC · JSON</div>
+    </div>
+
+    <div class="content">
+      <div class="pane">
+        <div class="pane-head">样例模型</div>
+        <div class="pane-body">
+          <div class="tree-item sel"><span>demo-collision.ifc</span><span class="badge">IFC</span></div>
+          <div class="tree-item"><span>demo-attrs.json</span><span class="badge">JSON</span></div>
+          <div class="tree-item"><span>demo-clean.ifc</span><span class="badge">IFC</span></div>
+        </div>
+      </div>
+
+      <div class="pane">
+        <div class="pane-head">模型入口</div>
+        <div class="pane-body center-hero">
+          <div class="drop-panel">
+            <h2>上传 IFC 模型</h2>
+            <p>拖拽至此处或点击选择 · 交付前自查</p>
+            <div class="btn-row">
+              <button type="button" class="btn btn-primary">上传 IFC 模型</button>
+              <button type="button" class="btn btn-secondary">选择样例模型</button>
+            </div>
+          </div>
+          <p style="font-size:11px;color:#7a8490">载入后可通过对话触发检查 · 结果可追溯至真实检测输出</p>
+        </div>
+      </div>
+
+      <div class="pane">
+        <div class="pane-head">检查示意</div>
+        <div class="pane-body">
+          <table class="props-table">
+            <tr><td>碰撞对</td><td>3</td></tr>
+            <tr><td>缺失属性</td><td>5 项</td></tr>
+            <tr><td>当前模型</td><td>—</td></tr>
+            <tr><td>状态</td><td>待载入</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="statusbar">
+      <span class="ok">就绪</span>
+      <span>桌面专用布局 · 模型默认本地处理</span>
+    </div>
+  </div>
+</body>
+</html>

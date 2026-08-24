@@ -1,0 +1,9 @@
+{
+  "missing": [
+    {"id": "door-1", "type": "IfcDoor", "field": "FireRating"},
+    {"id": "pipe-1", "type": "IfcPipeSegment", "field": "FireRating"},
+    {"id": "wall-1", "type": "IfcWall", "field": "Name"}
+  ],
+  "fields_checked": ["Name", "FireRating"],
+  "types_checked": ["IfcBeam", "IfcDoor", "IfcPipeSegment", "IfcWall"]
+}

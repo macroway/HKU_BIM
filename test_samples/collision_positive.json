@@ -1,0 +1,32 @@
+{
+  "elements": [
+    {
+      "id": "wall-1",
+      "type": "IfcWall",
+      "name": "外墙 A",
+      "props": {"Name": "外墙 A"},
+      "aabb": {"min": [0, 0, 0], "max": [10, 0.3, 3]}
+    },
+    {
+      "id": "pipe-1",
+      "type": "IfcPipeSegment",
+      "name": "风管-01",
+      "props": {"Name": "风管-01"},
+      "aabb": {"min": [5, -0.2, 1], "max": [6, 0.2, 2]}
+    },
+    {
+      "id": "beam-1",
+      "type": "IfcBeam",
+      "name": "主梁 B",
+      "props": {"Name": "主梁 B"},
+      "aabb": {"min": [0, 0, 2.8], "max": [10, 0.4, 3.2]}
+    },
+    {
+      "id": "wall-2",
+      "type": "IfcWall",
+      "name": "内墙 C",
+      "props": {"Name": "内墙 C"},
+      "aabb": {"min": [20, 0, 0], "max": [20.3, 5, 3]}
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "_说明": "复制到 data/state/<taskId>.json 后由 Loop 每 tick 更新。字段含义见 references/loop-strategy.md",
+  "taskId": "demo-task",
+  "tick": 0,
+  "currentPhase": "clarify",
+  "phaseStatus": "in_progress",
+  "subStep": null,
+  "artifacts": {
+    "rawInput": "docs/原始诉求.md",
+    "clarifyReport": null,
+    "prd": null,
+    "uiDesignBrief": null,
+    "uiOptions": [],
+    "uiSelected": null,
+    "techPlan": null
+  },
+  "codeCheckpoint": {
+    "current": null,
+    "completed": []
+  },
+  "humanConfirmed": {
+    "clarify": false,
+    "prd": false,
+    "ui": false,
+    "tech": false
+  },
+  "lastPlan": null,
+  "lastError": null,
+  "updatedAt": null
+}

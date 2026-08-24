@@ -1,0 +1,28 @@
+{
+  "elements": [
+    {
+      "id": "wall-1",
+      "type": "IfcWall",
+      "name": "外墙 A",
+      "props": {"Name": "外墙 A", "FireRating": "2h"}
+    },
+    {
+      "id": "door-1",
+      "type": "IfcDoor",
+      "name": "疏散门-1",
+      "props": {"Name": "疏散门-1", "FireRating": "1h"}
+    },
+    {
+      "id": "pipe-1",
+      "type": "IfcPipeSegment",
+      "name": "风管-01",
+      "props": {"Name": "风管-01", "FireRating": "0.5h"}
+    },
+    {
+      "id": "beam-1",
+      "type": "IfcBeam",
+      "name": "主梁 B",
+      "props": {"Name": "主梁 B", "FireRating": "1h"}
+    }
+  ]
+}

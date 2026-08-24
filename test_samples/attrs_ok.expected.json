@@ -1,0 +1,5 @@
+{
+  "missing": [],
+  "fields_checked": ["Name", "FireRating"],
+  "types_checked": ["IfcBeam", "IfcDoor", "IfcPipeSegment", "IfcWall"]
+}

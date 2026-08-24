@@ -1,0 +1,5 @@
+{
+  "pairs": [],
+  "engine": "aabb_v1",
+  "element_types_checked": ["IfcBeam", "IfcPipeSegment", "IfcWall"]
+}
