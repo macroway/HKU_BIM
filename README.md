@@ -2,7 +2,7 @@
 
 面向 BIM / 建筑工程师的**对话式交付前自查助手**。在模型交模前，用自然语言触发**几何碰撞**与**属性完整性**检查，并给出可追溯、可验收的结构化结果。
 
-本仓库是 HKU AI Agent 笔试 7 日 MVP 交付物：[代码](.) + [产研提示词](prompts/) + [过程文档](docs/)。
+本仓库是 HKU AI Agent 7 日 MVP 交付物：[代码](.) + [产研提示词](prompts/) + [过程文档](docs/)。
 
 > GitHub：https://github.com/macroway/HKU_BIM
 
